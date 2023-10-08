@@ -1,5 +1,6 @@
 package com.testemuralis.cadastroclientes.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.testemuralis.cadastroclientes.domain.model.Cliente;
+import com.testemuralis.cadastroclientes.dto.ClienteDTO;
+import com.testemuralis.cadastroclientes.mapper.ClienteMapper;
 import com.testemuralis.cadastroclientes.service.ClienteService;
 
 import jakarta.validation.Valid;
@@ -27,23 +30,30 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
+	
 	@GetMapping
-	public ResponseEntity<List<Cliente>> getAll() {
+	public ResponseEntity<List<ClienteDTO>> getAll() {
 		List<Cliente> clientes = clienteService.listarClientes();
-		return ResponseEntity.ok(clientes);
+		List<ClienteDTO> clientesResponse = new ArrayList<>();
+		for(Cliente i : clientes) {
+			clientesResponse.add(ClienteMapper.conversorToClienteDTO(i));
+		}
+		return ResponseEntity.ok(clientesResponse);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> getById(@PathVariable Long id) {
+	public ResponseEntity<ClienteDTO> getById(@PathVariable Long id) {
 		Optional<Cliente> cliente = clienteService.buscarClientePorId(id);
-		return cliente.map(resposta -> ResponseEntity.ok(resposta))
+		return cliente.map(resposta -> ResponseEntity.ok(ClienteMapper.conversorToClienteDTO(resposta)))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cliente> post(@Valid @RequestBody Cliente cliente) {
-		Cliente novoCliente = clienteService.cadastrarCliente(cliente);
-		return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+	public ResponseEntity<ClienteDTO> post(@Valid @RequestBody ClienteDTO clienteRequest) {
+		Cliente cliente = ClienteMapper.conversorToCliente(clienteRequest);
+		Cliente clienteSalvo = clienteService.cadastrarCliente(cliente);
+		ClienteDTO clienteResponse = ClienteMapper.conversorToClienteDTO(clienteSalvo);
+		return ResponseEntity.status(HttpStatus.CREATED).body(clienteResponse);
 	}
 	
 	@DeleteMapping("/{id}")
