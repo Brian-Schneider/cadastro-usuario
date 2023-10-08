@@ -3,6 +3,7 @@ package com.testemuralis.cadastroclientes.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,29 +31,29 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
+	@Autowired
+	private ClienteMapper mapper;
+	
 	
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> getAll() {
 		List<Cliente> clientes = clienteService.listarClientes();
-		List<ClienteDTO> clientesResponse = new ArrayList<>();
-		for(Cliente i : clientes) {
-			clientesResponse.add(ClienteMapper.conversorToClienteDTO(i));
-		}
+		List<ClienteDTO> clientesResponse = mapper.conversorListaClienteDTO(clientes);
 		return ResponseEntity.ok(clientesResponse);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDTO> getById(@PathVariable Long id) {
 		Optional<Cliente> cliente = clienteService.buscarClientePorId(id);
-		return cliente.map(resposta -> ResponseEntity.ok(ClienteMapper.conversorToClienteDTO(resposta)))
+		return cliente.map(resposta -> ResponseEntity.ok(mapper.conversorClienteDTO(resposta)))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
 	@PostMapping
 	public ResponseEntity<ClienteDTO> post(@Valid @RequestBody ClienteDTO clienteRequest) {
-		Cliente cliente = ClienteMapper.conversorToCliente(clienteRequest);
+		Cliente cliente = mapper.conversorCliente(clienteRequest);
 		Cliente clienteSalvo = clienteService.cadastrarCliente(cliente);
-		ClienteDTO clienteResponse = ClienteMapper.conversorToClienteDTO(clienteSalvo);
+		ClienteDTO clienteResponse = mapper.conversorClienteDTO(clienteSalvo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteResponse);
 	}
 	
@@ -62,7 +63,7 @@ public class ClienteController {
 		
 		if(cliente.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-			
+			 
 		clienteService.deletarCliente(id);
 	}
 	
