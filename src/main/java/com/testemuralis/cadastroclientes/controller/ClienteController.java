@@ -1,9 +1,8 @@
 package com.testemuralis.cadastroclientes.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +24,16 @@ import com.testemuralis.cadastroclientes.service.ClienteService;
 
 import jakarta.validation.Valid;
 
+/**
+ * Controller para os Endpoints REST de Cadastro Clientes.
+ * <p>
+ * Classe responsável pela operacão dos métodos
+ * CRUD dos Cadastros de Cliente por meio de requisições HTTP.
+ * </p>
+ * O Endpoint é "/clientes".
+ * </p>
+ * @author Brian Schneider
+ */
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -35,7 +44,14 @@ public class ClienteController {
 	@Autowired
 	private ClienteMapper mapper;
 	
-	
+	/**
+	 * Exibe uma Lista com todos os Clientes já Cadastrados.
+	 * <p>
+	 * 200: Lista retornada com sucesso.
+	 * </p>
+	 * 
+	 * @return Uma Lista de Clientes cadastrados.
+	 */
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> getAll() {
 		List<Cliente> clientes = clienteService.listarClientes();
@@ -43,6 +59,20 @@ public class ClienteController {
 		return ResponseEntity.ok(clientesResponse);
 	}
 	
+	/**
+	 * Busca por id um Cliente e exibe um DTO do mesmo.
+	 * <p>
+	 * O Endpoint desse método é "/id".
+	 * </p>
+	 * <p>
+	 * 200: Cliente encontrado com sucesso.
+	 * </p>
+	 * <p>
+	 * 404: Cliente não foi encontrado.
+	 * </p>
+	 * @param id do Cliente a ser buscado.
+	 * @return um DTO do Cliente encontrado.
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDTO> getById(@PathVariable Long id) {
 		Optional<Cliente> cliente = clienteService.buscarClientePorId(id);
@@ -50,6 +80,15 @@ public class ClienteController {
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
+	/**
+	 * Cadastra um novo objeto Cliente de acordo com os dados de entrada.
+	 * <p>
+	 * 201: Cliente cadastrado com sucesso.
+	 * </p>
+	 * @param clienteRequest é um JSON representando um DTO Cliente.
+	 * @return o DTO do Cliente recém cadastrado.
+	 * @throws IOException em {@link ClienteService#cadastrarCliente(Cliente) CadastrarCliente}.
+	 */
 	@PostMapping
 	public ResponseEntity<ClienteDTO> post(@Valid @RequestBody ClienteDTO clienteRequest) throws Exception {
 		Cliente cliente = mapper.conversorCliente(clienteRequest);
@@ -58,14 +97,41 @@ public class ClienteController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteResponse);
 	}
 	
+	/**
+	 * Atualiza um Cliente já existente.
+	 * de acordo com os dados de entrada do objeto
+	 * 
+	 * <p>
+	 * 200: Cliente atualizado com sucesso.
+	 * </p>
+	 * <p>
+	 * 404: Cliente não foi encontrado.
+	 * </p>
+	 * @param clienteRequest é um JSON representando um DTO Cliente.
+	 * @return o DTO do Cliente recém atualizado.
+	 * @throws IOException em {@link ClienteService#atualizarCliente(Cliente) CadastrarCliente}.
+	 */
 	@PutMapping
-	public ResponseEntity<ClienteDTO> put(@Valid @RequestBody ClienteDTO clienteRequest) {
+	public ResponseEntity<ClienteDTO> put(@Valid @RequestBody ClienteDTO clienteRequest) throws Exception{
 		Cliente cliente = mapper.conversorCliente(clienteRequest);
 		Cliente clienteSalvo = clienteService.atualizarCliente(cliente);
 		ClienteDTO clienteResponse = mapper.conversorClienteDTO(clienteSalvo);
 		return ResponseEntity.status(HttpStatus.OK).body(clienteResponse);
 	}
 	
+	/**
+	 * Busca por id um Cliente e deleta o mesmo.
+	 * <p>
+	 * O Endpoint desse método é "/id"
+	 * </p>
+	 * <p>
+	 * 200: Cliente deletado com sucesso.
+	 * </p>
+	 * <p>
+	 * 404: Cliente não foi encontrado.
+	 * </p>
+	 * @param id do Cliente a ser deletado.
+	 */
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		Optional<Cliente> cliente = clienteService.buscarClientePorId(id);

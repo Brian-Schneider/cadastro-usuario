@@ -1,9 +1,6 @@
 package com.testemuralis.cadastroclientes.dto;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testemuralis.cadastroclientes.domain.model.Contato;
@@ -15,10 +12,22 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
+/**
+ * ClienteDTO é uma classe para a criação de
+ * um objeto para transfeência de dados para evitar
+ * de o usuário manipular diretamente a entidade Cliente.
+ * 
+ * @author Brian Schneider
+ */
 public class ClienteDTO {
 	
 	private Long id;
+	
+	@NotBlank(message = "O atributo nome é obrigatório")
+	@Size(max = 150, message = " O atributo nome deve ter no máximo 150 caracteres")
 	@Column(name = "nome")
 	private String nome;
 	
@@ -30,20 +39,14 @@ public class ClienteDTO {
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private List<Contato> contato;
 	
+	@NotBlank(message = "O atributo dataCadastro é obrigatório")
+	@Size(max = 10, message = " O atributo dataCadastro deve ter no máximo 10 caracteres")
+	@Column(name = "data_cadastro")
+	private String dataCadastro;
+	
 	//@UpdateTimestamp
 	//private LocalDateTime dataCadastro;
 	
-	public ClienteDTO() {
-		
-	}
-	
-	public ClienteDTO(Long id, String nome, Endereco endereco, List<Contato> contato/*, LocalDateTime dataCadastro*/) {
-		this.id = id;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.contato = contato;
-		//this.dataCadastro = dataCadastro;
-	}
 
 	public Long getId() {
 		return id;
@@ -77,13 +80,13 @@ public class ClienteDTO {
 		this.contato = contato;
 	}
 
-	/*public LocalDateTime getDataCadastro() {
+	public String getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDateTime dataCadastro) {
+	public void setDataCadastro(String dataCadastro) {
 		this.dataCadastro = dataCadastro;
-	}*/
+	}
 	
 	
 	

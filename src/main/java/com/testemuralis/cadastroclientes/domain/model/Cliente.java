@@ -1,9 +1,6 @@
 package com.testemuralis.cadastroclientes.domain.model;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,19 +17,22 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
+/**
+ * Cliente é uma entidade para o banco de dados.
+ * 
+ * @author Brian Schneider
+ */
 @Entity
 @Table (name = "tb_cliente")
-@Data
-@NoArgsConstructor
 public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@NotBlank(message = "O atributo nome é obrigatório")
+	@Size(max = 150, message = " O atributo nome deve ter no máximo 150 caracteres")
 	@Column(name = "nome")
 	private String nome;
 	
@@ -44,13 +44,20 @@ public class Cliente {
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private List<Contato> contato;
 	
+	@NotBlank(message = "O atributo dataCadastro é obrigatório")
+	@Size(max = 10, message = " O atributo dataCadastro deve ter no máximo 10 caracteres")
+	@Column(name = "data_cadastro")
+	private String dataCadastro;
+	
 	//@UpdateTimestamp
 	//private LocalDateTime dataCadastro;
 	
+	/**
+	 * Constrói um Cliente sem argumentos de entrada
+	 */
 	public Cliente() {
 		
 	}
-
 
 	public Long getId() {
 		return id;
@@ -84,13 +91,13 @@ public class Cliente {
 		this.contato = contato;
 	}
 
-	//public LocalDateTime getDataCadastro() {
-	//	return dataCadastro;
-	//}
+	public String getDataCadastro() {
+		return dataCadastro;
+	}
 
-	//public void setDataCadastro(LocalDateTime dataCadastro) {
-	//	this.dataCadastro = dataCadastro;
-	//}
+	public void setDataCadastro(String dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
 	
 	
 
