@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.testemuralis.cadastroclientes.domain.model.Cliente;
 import com.testemuralis.cadastroclientes.domain.model.Contato;
@@ -28,11 +30,14 @@ public class ClienteService {
 		return clienteRepository.findById(id);
 	}
 	
-	/*public Cliente atualizarCliente (Cliente cliente) {
+	public Cliente atualizarCliente (Cliente cliente) {
 		
-		if(clienteRepository.existsById(cliente))
+		Optional<Cliente> clienteDadosAntigos = clienteRepository.findById(cliente.getId());
+		if (clienteDadosAntigos.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return clienteRepository.save(cliente);
 		
-	} */
+	} 
 	
 	public void deletarCliente (Long id) {
 		clienteRepository.deleteById(id);
