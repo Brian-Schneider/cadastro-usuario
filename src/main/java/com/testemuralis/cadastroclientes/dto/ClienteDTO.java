@@ -30,18 +30,19 @@ public class ClienteDTO {
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private List<Contato> contato;
 	
-	@UpdateTimestamp
-	private LocalDateTime dataCadastro;
+	//@UpdateTimestamp
+	//private LocalDateTime dataCadastro;
+	
 	public ClienteDTO() {
 		
 	}
 	
-	public ClienteDTO(Long id, String nome, Endereco endereco, List<Contato> contato, LocalDateTime dataCadastro) {
+	public ClienteDTO(Long id, String nome, Endereco endereco, List<Contato> contato/*, LocalDateTime dataCadastro*/) {
 		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.contato = contato;
-		this.dataCadastro = dataCadastro;
+		//this.dataCadastro = dataCadastro;
 	}
 
 	public Long getId() {
@@ -76,13 +77,13 @@ public class ClienteDTO {
 		this.contato = contato;
 	}
 
-	public LocalDateTime getDataCadastro() {
+	/*public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
 
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
-	}
+	}*/
 	
 	
 	

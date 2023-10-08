@@ -41,7 +41,7 @@ public class Endereco {
 	//@NotBlank(message = "O atributo cidade é obrigatório")
 	//@Size(max = 150, message = " O atributo cidade deve ter no máximo 150 caracteres")
 	@Column(name = "cidade")
-	private String cidade;
+	private String localidade;
 	
 	//@NotBlank(message = "O atributo número é obrigatório")
 	//@Size(max = 10, message = " O atributo nome deve ter no máximo 10 caracteres")
@@ -83,12 +83,12 @@ public class Endereco {
 		this.logradouro = logradouro;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getLocalidade() {
+		return localidade;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 
 	public String getNumero() {

@@ -51,7 +51,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteDTO> post(@Valid @RequestBody ClienteDTO clienteRequest) {
+	public ResponseEntity<ClienteDTO> post(@Valid @RequestBody ClienteDTO clienteRequest) throws Exception {
 		Cliente cliente = mapper.conversorCliente(clienteRequest);
 		Cliente clienteSalvo = clienteService.cadastrarCliente(cliente);
 		ClienteDTO clienteResponse = mapper.conversorClienteDTO(clienteSalvo);

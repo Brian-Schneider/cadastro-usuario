@@ -44,8 +44,8 @@ public class Cliente {
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private List<Contato> contato;
 	
-	@UpdateTimestamp
-	private LocalDateTime dataCadastro;
+	//@UpdateTimestamp
+	//private LocalDateTime dataCadastro;
 	
 	public Cliente() {
 		
@@ -84,13 +84,13 @@ public class Cliente {
 		this.contato = contato;
 	}
 
-	public LocalDateTime getDataCadastro() {
-		return dataCadastro;
-	}
+	//public LocalDateTime getDataCadastro() {
+	//	return dataCadastro;
+	//}
 
-	public void setDataCadastro(LocalDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
+	//public void setDataCadastro(LocalDateTime dataCadastro) {
+	//	this.dataCadastro = dataCadastro;
+	//}
 	
 	
 
