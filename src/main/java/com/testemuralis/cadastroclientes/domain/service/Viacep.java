@@ -1,4 +1,4 @@
-package com.testemuralis.cadastroclientes.service;
+package com.testemuralis.cadastroclientes.domain.service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package com.testemuralis.cadastroclientes.service;
+package com.testemuralis.cadastroclientes.domain.service;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.testemuralis.cadastroclientes.domain.model.Cliente;
-import com.testemuralis.cadastroclientes.repository.ClienteRepository;
+import com.testemuralis.cadastroclientes.domain.repository.ClienteRepository;
 
 /**
  * Service para implementação dos métodos a

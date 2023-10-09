@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.testemuralis.cadastroclientes.domain.model.Cliente;
+import com.testemuralis.cadastroclientes.domain.service.ClienteService;
 import com.testemuralis.cadastroclientes.dto.ClienteDTO;
 import com.testemuralis.cadastroclientes.mapper.ClienteMapper;
-import com.testemuralis.cadastroclientes.service.ClienteService;
 
 import jakarta.validation.Valid;
 
