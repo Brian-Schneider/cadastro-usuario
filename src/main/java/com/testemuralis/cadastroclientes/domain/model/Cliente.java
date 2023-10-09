@@ -2,8 +2,6 @@ package com.testemuralis.cadastroclientes.domain.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,8 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 /**
  * Cliente é uma entidade para o banco de dados.
@@ -31,21 +27,16 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "O atributo nome é obrigatório")
-	@Size(max = 150, message = " O atributo nome deve ter no máximo 150 caracteres")
 	@Column(name = "nome")
 	private String nome;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("cliente")
 	private Endereco endereco;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Contato.class)
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private List<Contato> contato;
 	
-	@NotBlank(message = "O atributo dataCadastro é obrigatório")
-	@Size(max = 10, message = " O atributo dataCadastro deve ter no máximo 10 caracteres")
 	@Column(name = "data_cadastro")
 	private String dataCadastro;
 	
