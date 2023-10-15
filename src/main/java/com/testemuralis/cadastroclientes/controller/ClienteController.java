@@ -80,6 +80,13 @@ public class ClienteController {
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
+	@GetMapping("/buscar-nome/{nome}")
+	public ResponseEntity<List<ClienteDTO>> getByNome(@PathVariable String nome) {
+		List<Cliente> clientes = clienteService.buscarClientePorNome(nome);
+		List<ClienteDTO> clientesResponse = mapper.conversorListaClienteDTO(clientes);
+		return ResponseEntity.ok(clientesResponse);
+	}
+	
 	/**
 	 * Cadastra um novo objeto Cliente de acordo com os dados de entrada.
 	 * <p>

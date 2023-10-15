@@ -58,6 +58,10 @@ public class ClienteService {
 		return clienteRepository.findById(id);
 	}
 	
+	public List<Cliente> buscarClientePorNome (String nome) {
+		return clienteRepository.findAllByNomeContainingIgnoreCase(nome);
+	}
+	
 	/**
 	 * Método para Atualizar um Cliente no banco de dados.
 	 * @param cliente é o Cliente a ser atualizado.
