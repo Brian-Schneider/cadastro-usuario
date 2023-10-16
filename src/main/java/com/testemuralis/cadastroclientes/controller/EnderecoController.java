@@ -36,19 +36,21 @@ public class EnderecoController {
 		return null;
 	}
 	
-	@GetMapping("/nome-rua/{logradouro}")
+	@GetMapping("/rua/{logradouro}")
 	public ResponseEntity<List<EnderecoDTO>> getAllByLogradouro() {
 		return null;
 	}
 	
-	@GetMapping("/nome-localidade/{localidade}")
+	@GetMapping("/localidade/{localidade}")
 	public ResponseEntity<List<EnderecoDTO>> getAllByLocalidade() {
 		return null;
 	}
 	
 	@GetMapping("/cep/{cep}")
 	public ResponseEntity<List<EnderecoDTO>> getAllByCep(@PathVariable String cep) {
-		return null;
+		List<Endereco> enderecos = enderecoService.listarEnderecosPorCep(cep);
+		List<EnderecoDTO> enderecosResponse = enderecoMapper.conversorListaEndercoDTO(enderecos);
+		return ResponseEntity.ok(enderecosResponse);
 	}
 	
 	@GetMapping("/endereco/{lcep}/{numero}")

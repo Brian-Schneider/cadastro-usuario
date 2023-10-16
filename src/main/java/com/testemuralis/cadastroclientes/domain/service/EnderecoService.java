@@ -18,4 +18,9 @@ public class EnderecoService {
 		return enderecoRepository.findAll();
 	}
 
+	public List<Endereco> listarEnderecosPorCep(String cep) {
+		String cepComHifen = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+		return enderecoRepository.findAllByCepContaining(cepComHifen);
+	}
+
 }
