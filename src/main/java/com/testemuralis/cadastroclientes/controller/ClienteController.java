@@ -1,6 +1,9 @@
 package com.testemuralis.cadastroclientes.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,8 +84,9 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/buscar-nome/{nome}")
-	public ResponseEntity<List<ClienteDTO>> getByNome(@PathVariable String nome) {
-		List<Cliente> clientes = clienteService.buscarClientePorNome(nome);
+	public ResponseEntity<List<ClienteDTO>> getAllByNome(@PathVariable String nome) throws UnsupportedEncodingException {
+		String urlDecodedNome = URLDecoder.decode(nome, StandardCharsets.UTF_8.toString());
+		List<Cliente> clientes = clienteService.buscarClientePorNome(urlDecodedNome);
 		List<ClienteDTO> clientesResponse = mapper.conversorListaClienteDTO(clientes);
 		return ResponseEntity.ok(clientesResponse);
 	}

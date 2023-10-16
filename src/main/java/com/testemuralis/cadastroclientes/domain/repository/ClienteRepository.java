@@ -11,7 +11,7 @@ import com.testemuralis.cadastroclientes.domain.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	
-	public List<Cliente> findAllByNomeContainingIgnoreCase(@Param("nome") String cliente);
+	public List<Cliente> findAllByNomeContainingIgnoreCase(@Param("nome") String nome);
 
 
 
