@@ -26,8 +26,8 @@ public class EnderecoDTO {
 	@Size(max = 150, message = " O atributo logradouro deve ter no máximo 150 caracteres")
 	private String logradouro;
 	
-	@NotBlank(message = "O atributo cidade é obrigatório")
-	@Size(max = 150, message = " O atributo cidade deve ter no máximo 150 caracteres")
+	@NotBlank(message = "O atributo localidade é obrigatório")
+	@Size(max = 150, message = " O atributo localidade deve ter no máximo 150 caracteres")
 	private String localidade;
 	
 	@NotBlank(message = "O atributo número é obrigatório")

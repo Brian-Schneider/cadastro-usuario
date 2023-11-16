@@ -6,13 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.testemuralis.cadastroclientes.domain.model.Cliente;
+import com.testemuralis.cadastroclientes.domain.model.Endereco;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 	
-	public List<Cliente> findAllByNomeContainingIgnoreCase(@Param("nome") String nome);
-
-
+	public List<Endereco> findAllByCepContaining(@Param("cep") String cep);
 
 }
